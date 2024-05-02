@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import pygame
-from prj_jetwar.plane_sprites import *
+from plane_sprites import *
+# from plane_scrites import PlaneGame
 
 
 class PlaneGame:
@@ -20,7 +23,7 @@ class PlaneGame:
 
         #加载背景音乐，无限循环
         pygame.mixer.init()
-        pygame.mixer.music.load("./prj_jetwar/musics/Brinstar.mp3")
+        pygame.mixer.music.load("./musics/Brinstar.mp3")
         pygame.mixer.music.play(-1)
 
     def __create_sprites(self):
@@ -66,7 +69,7 @@ class PlaneGame:
             try:
                 if not self.boss.alive():
                     pygame.mixer.init()
-                    pygame.mixer.music.load("./prj_jetwar/musics/winsound.mp3")
+                    pygame.mixer.music.load("./musics/winsound.mp3")
                     pygame.mixer.music.play(1)
                     sleep(5)
                     PlaneGame.__game_over() 
@@ -134,13 +137,13 @@ class PlaneGame:
         ##########过程中在plane_sprites里面打印ENEMYCOUNT可以看到数据+1不断累加#######################
         ##########但是如果在main模块下通过global ENEMYCOUNT访问它，会发现它恒等于初始值0###############
         ##########而如果通过此处import ENEMYCOUNT访问，得到的是正确的累加后的结果#####################
-        from prj_jetwar.plane_sprites import ENEMYCOUNT
+        from plane_sprites import ENEMYCOUNT
         #####因为BOSSCOUNT是在main中被更新，所以不需要重新import##########
         global BOSSCOUNT
         if ENEMYCOUNT>7 and BOSSCOUNT==1:
             BOSSCOUNT +=1
             #消灭达到数量，播放警报音乐，静止2秒
-            pygame.mixer.music.load("./prj_jetwar/musics/alarm.mp3")
+            pygame.mixer.music.load("./musics/alarm.mp3")
             pygame.mixer.music.play(1)
             sleep(2)
 

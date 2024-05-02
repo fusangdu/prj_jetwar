@@ -45,7 +45,7 @@ class GameSprite(pygame.sprite.Sprite):
 class Background(GameSprite):
     """游戏背景"""
     def __init__(self,is_alt=False):
-        super().__init__("./prj_jetwar/images/background.png")   #这里写死了图片地址因为只有一个背景，所以子类的__init__方法里面就不需要传这个参了
+        super().__init__("./images/background.png")   #这里写死了图片地址因为只有一个背景，所以子类的__init__方法里面就不需要传这个参了
         
         #通过is_alt分别创建两个上下连接的背景
         if is_alt:
@@ -62,7 +62,7 @@ class Background(GameSprite):
 
 class Enemy(GameSprite):
     """小敌机"""
-    def __init__(self,screen,imagepath="./prj_jetwar/images/enemy1.png",soundpath="./prj_jetwar/musics/explosion2.mp3",destroyimages=["./prj_jetwar/images/enemy1_down1.png","./prj_jetwar/images/enemy1_down2.png","./prj_jetwar/images/enemy1_down3.png","./prj_jetwar/images/enemy1_down4.png"]):
+    def __init__(self,screen,imagepath="./images/enemy1.png",soundpath="./musics/explosion2.mp3",destroyimages=["./images/enemy1_down1.png","./images/enemy1_down2.png","./images/enemy1_down3.png","./images/enemy1_down4.png"]):
         #调用父类方法，创见敌机，同时指定敌机图片
         super().__init__(imagepath)
 
@@ -121,15 +121,15 @@ class SuperEnemy(Enemy):
     """中型敌机"""
     def __init__(self,screen,enemy_bullets_group):
         #继承小敌机
-        super().__init__(screen,imagepath="./prj_jetwar/images/enemy2.png",soundpath="./prj_jetwar/musics/explosion3.mp3",destroyimages=["./prj_jetwar/images/enemy2_down1.png","./prj_jetwar/images/enemy2_down2.png","./prj_jetwar/images/enemy2_down3.png","./prj_jetwar/images/enemy2_down4.png"])
+        super().__init__(screen,imagepath="./images/enemy2.png",soundpath="./musics/explosion3.mp3",destroyimages=["./images/enemy2_down1.png","./images/enemy2_down2.png","./images/enemy2_down3.png","./images/enemy2_down4.png"])
         
         #调用定义在主游戏类里的敌机子弹组
         self.enemy_bullets_group=enemy_bullets_group
         
         #加载射击、被击中、音效
         pygame.mixer.init()
-        self.gunsound=pygame.mixer.Sound("./prj_jetwar/musics/laser1.mp3")
-        self.hitsound=pygame.mixer.Sound("./prj_jetwar/musics/metalhit3.mp3")
+        self.gunsound=pygame.mixer.Sound("./musics/laser1.mp3")
+        self.hitsound=pygame.mixer.Sound("./musics/metalhit3.mp3")
         #记录实例创建时间，用来控制子弹发射频率
         self.create_time=time.time()
         #生命值
@@ -138,7 +138,7 @@ class SuperEnemy(Enemy):
 
     def fire(self):
         #创建bullet，子弹类传入图片和速度
-        bullet=Bullet("./prj_jetwar/images/bullet2.png",speed=3)
+        bullet=Bullet("./images/bullet2.png",speed=3)
         #设置子弹初始位置
         bullet.rect.centerx = self.rect.centerx
         bullet.rect.top=self.rect.bottom
@@ -166,7 +166,7 @@ class SuperEnemy(Enemy):
 #考虑到Boss类有很多要重写的地方，干脆不从中型敌机、小型敌机开始继承
 class Boss(GameSprite):
     """大BOSS"""
-    def __init__(self,screen,bullets_group,imagepath=["./prj_jetwar/images/enemy3_n1.png","./prj_jetwar/images/enemy3_n2.png"],soundpath="./prj_jetwar/musics/loudexplosion.mp3",hitsound="./prj_jetwar/musics/metalhit3.mp3",gunsound="./prj_jetwar/musics/laser1.mp3",destroyimages=["./prj_jetwar/images/enemy3_down1.png","./prj_jetwar/images/enemy3_down2.png","./prj_jetwar/images/enemy3_down3.png","./prj_jetwar/images/enemy3_down4.png","./prj_jetwar/images/enemy3_down5.png","./prj_jetwar/images/enemy3_down6.png"]):
+    def __init__(self,screen,bullets_group,imagepath=["./images/enemy3_n1.png","./images/enemy3_n2.png"],soundpath="./musics/loudexplosion.mp3",hitsound="./musics/metalhit3.mp3",gunsound="./musics/laser1.mp3",destroyimages=["./images/enemy3_down1.png","./images/enemy3_down2.png","./images/enemy3_down3.png","./images/enemy3_down4.png","./images/enemy3_down5.png","./images/enemy3_down6.png"]):
         #调用父类方法，创见敌机，同时指定敌机初始图片
         super().__init__(imagepath[0])
         #存储BOSS两张图片，用于生成动态效果
@@ -232,7 +232,7 @@ class Boss(GameSprite):
             if MUSICCOUNT==1:
                 MUSICCOUNT+=1
                 pygame.mixer.init()
-                pygame.mixer.music.load("./prj_jetwar/musics/jinitaimei.mp3")
+                pygame.mixer.music.load("./musics/jinitaimei.mp3")
                 pygame.mixer.music.play(1)
 
              
@@ -258,7 +258,7 @@ class Boss(GameSprite):
     def fire(self):
         for i in (-1,0,1):
             #创建bullet
-            bullet=Bullet("./prj_jetwar/images/bullet2.png",speed=3)
+            bullet=Bullet("./images/bullet2.png",speed=3)
             #设置子弹初始位置，水平发射三枚
             bullet.rect.x=self.rect.centerx-15 * i
             bullet.rect.top = self.rect.bottom
@@ -272,7 +272,7 @@ class Boss(GameSprite):
 class Hero(GameSprite):
     """英雄"""
     def __init__(self,screen):
-        super().__init__("./prj_jetwar/images/me2.png",0)
+        super().__init__("./images/me2.png",0)
 
         #初始位置
         self.rect.centerx=SCREEN_RECT.centerx
@@ -283,9 +283,9 @@ class Hero(GameSprite):
         
         #加载射击、爆炸、被击中音效
         pygame.mixer.init()
-        self.gunsound=pygame.mixer.Sound("./prj_jetwar/musics/machinegun2.mp3")
-        self.explosound=pygame.mixer.Sound("./prj_jetwar/musics/explosion2.mp3")
-        self.hitsound=pygame.mixer.Sound("./prj_jetwar/musics/metalhit3.mp3")
+        self.gunsound=pygame.mixer.Sound("./musics/machinegun2.mp3")
+        self.explosound=pygame.mixer.Sound("./musics/explosion2.mp3")
+        self.hitsound=pygame.mixer.Sound("./musics/metalhit3.mp3")
         
         #生命值
         self.life=3
@@ -332,7 +332,7 @@ class Hero(GameSprite):
             #播放爆炸音效
             self.explosound.play()
             #创建特效
-            explosion=Explosion(self.rect.topleft,self.screen,"./prj_jetwar/images/me_destroy_1.png","./prj_jetwar/images/me_destroy_2.png","./prj_jetwar/images/me_destroy_3.png","./prj_jetwar/images/me_destroy_4.png")
+            explosion=Explosion(self.rect.topleft,self.screen,"./images/me_destroy_1.png","./images/me_destroy_2.png","./images/me_destroy_3.png","./images/me_destroy_4.png")
             #释放特效
             explosion.update()
             super().kill()
@@ -345,7 +345,7 @@ class Hero(GameSprite):
 
 class Bullet(GameSprite):
     """敌我所有子弹"""
-    def __init__(self,bulletpath="./prj_jetwar/images/bullet1.png",speed=-3):
+    def __init__(self,bulletpath="./images/bullet1.png",speed=-3):
         super().__init__(bulletpath,speed=speed)
 
     def update(self):
